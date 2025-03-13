@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List avec AlpineJS et TailwindCSS</title>
+    
+    <!-- Inclusion d'AlpineJS pour la gestion des interactions et des états -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+    
+    <!-- Inclusion de TailwindCSS pour le style -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Styles pour les différentes priorités des tâches */
+        .priority-low { background-color: #34d399; }  
+        .priority-medium { background-color: #fbbf24; } 
+        .priority-high { background-color: #ef4444; } 
+    </style>
+</head>
+<body class="font-sans bg-gray-100 py-8 px-4">
+    <!-- Composant AlpineJS principal -->
+    <div x-data="todoApp()" class="max-w-lg mx-auto">
+        
+        <!-- Titre de l'application -->
+        <h1 class="text-3xl font-semibold mb-6 text-center">Todo List</h1>
+
+        <!-- Section pour l'input de nouvelle tâche et les filtres -->
+        <div class="flex mb-4 justify-between">
+            
+            <!-- Champ pour ajouter une nouvelle tâche -->
+            <input x-model="newTaskText" type="text" placeholder="Nouvelle tâche" class="p-2 border rounded w-3/4" />
+            
+            <!-- Sélecteur de priorité pour la tâche -->
+            <select x-model="newTaskPriority" class="p-2 border rounded w-1/4">
+                <option value="low">Basse</option>
+                <option value="medium">Moyenne</option>
+                <option value="high">Haute</option>
+            </select>
+
+            <!-- Sélecteur de filtre pour les tâches -->
+            <select x-model="filter" class="p-2 border rounded w-1/4">
+                <option value="all">Toutes</option>
+                <option value="completed">Terminées</option>
+                <option value="incomplete">En cours</option>
+            </select>
+        </div>
+
+        <!-- Liste des tâches -->
+        <ul class="space-y-4">
+            <template x-for="(task, index) in filteredTasks()" :key="index">
+                <li class="flex items-center space-x-4">
+                    <input type="checkbox" x-model="task.completed" class="form-checkbox" />
+                    <span :class="{'line-through text-gray-400': task.completed, [task.priority]: true}" class="flex-1 p-3">
+                        <span x-text="task.text"></span>
+                    </span>
+                    <button @click="deleteTask(index)" class="text-red-500">Supprimer</button>
+                </li>
+            </template>
+        </ul>
+
+        <!-- Bouton pour ajouter une tâche -->
+        <div class="flex space-x-2 mt-4">
+            <button @click="addTask()" class="bg-blue-500 text-white px-4 py-2 rounded">Ajouter tâche</button>
+        </div>
+    </div>
+
+    <!-- Inclusion des scripts -->
+    <script src="js/taskFilter.js"></script>
+    <script src="js/taskValidation.js"></script>
+    <script src="js/taskStateManager.js"></script>
+    <script src="js/taskManager.js"></script>
+    <script src="js/localStorageManager.js"></script>
+    <script src="js/todo.js"></script>
+</body>
+</html>
