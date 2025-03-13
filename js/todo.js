@@ -36,7 +36,6 @@ function todoApp() {
 
         // Method to toggle the completion status of a task
         toggleTaskCompletion(index) {
-            console.log(index)
             // Toggle the completion state of the task using TaskStateManager
             TaskStateManager.toggleCompletion(this.tasks[index]);
             // Save the updated tasks list to localStorage

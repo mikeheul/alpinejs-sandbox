@@ -50,7 +50,7 @@
         <ul class="space-y-4">
             <template x-for="(task, index) in filteredTasks()" :key="index">
                 <li class="flex items-center space-x-4">
-                    <input type="checkbox" x-model="task.completed" class="form-checkbox" />
+                    <input type="checkbox" :checked="task.completed" @click="toggleTaskCompletion(index)" class="form-checkbox" />
                     <span :class="{'line-through text-gray-400': task.completed, [task.priority]: true}" class="flex-1 p-3">
                         <span x-text="task.text"></span>
                     </span>
